@@ -447,7 +447,7 @@ class SphinxQuerySet(object):
             for name, values in filter_list.iteritems():
                 parts = len(name.split('__'))
                 if parts > 2:
-                    raise NotImplementedError, 'Related object and/or multiple field lookups not supported'
+                    raise NotImplementedError as 'Related object and/or multiple field lookups not supported'
                 elif parts == 2:
                     # The float handling for __gt and __lt is kind of ugly..
                     name, lookup = name.split('__', 1)
@@ -479,7 +479,7 @@ class SphinxQuerySet(object):
                     elif lookup == 'range':
                         args = (name, values[0], values[1], exclude)
                     else:
-                        raise NotImplementedError, 'Related object and/or field lookup "%s" not supported' % lookup
+                        raise NotImplementedError as 'Related object and/or field lookup "%s" not supported' % lookup
                     if is_float:
                         client.SetFilterFloatRange(*args)
                     elif not exclude and self.model and name == self.model._meta.pk.column:
@@ -532,9 +532,9 @@ class SphinxQuerySet(object):
 
         if not results:
             if client.GetLastError():
-                raise SearchError, client.GetLastError()
+                raise SearchError as client.GetLastError()
             elif client.GetLastWarning():
-                raise SearchError, client.GetLastWarning()
+                raise SearchError as client.GetLastWarning()
             else:
                 results = EMPTY_RESULT_SET
         elif not results['matches']:
