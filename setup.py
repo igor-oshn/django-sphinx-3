@@ -7,12 +7,12 @@ import djangosphinx
 setup(
     name='djangosphinx',
     version=".".join(map(str, djangosphinx.__version__)),
-    author='David Cramer',
-    author_email='dcramer@gmail.com',
-    url='http://github.com/dcramer/django-sphinx',
+    author='Igor',
+    author_email='igor@gmail.com',
+    url='http://github.com/igor-oshn/django-sphinx',
     install_requires=['django'],
     description = 'An integration layer bringing Django and Sphinx Search together.',
-    packages=find_packages(),
+    packages=find_packages('raros'),
     include_package_data=True,
     classifiers=[
         "Framework :: Django",
