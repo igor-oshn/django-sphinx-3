@@ -12,7 +12,7 @@ setup(
     url='http://github.com/igor-oshn/django-sphinx',
     install_requires=['django'],
     description = 'An integration layer bringing Django and Sphinx Search together.',
-    packages=find_packages('raros'),
+    packages=find_packages(),
     include_package_data=True,
     classifiers=[
         "Framework :: Django",
