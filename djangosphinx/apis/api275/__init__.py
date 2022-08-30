@@ -72,7 +72,7 @@ SPH_ATTR_TIMESTAMP		= 2
 SPH_ATTR_ORDINAL		= 3
 SPH_ATTR_BOOL			= 4
 SPH_ATTR_FLOAT			= 5
-SPH_ATTR_MULTI			= 0X40000000L
+SPH_ATTR_MULTI			= 0X40000000
 
 # known grouping functions
 SPH_GROUPBY_DAY	 		= 0
@@ -148,7 +148,7 @@ class SphinxClient:
 		try:
 			sock = socket.socket ( socket.AF_INET, socket.SOCK_STREAM )
 			sock.connect ( ( self._host, self._port ) )
-		except socket.error, msg:
+		except socket.error as msg:
 			if sock:
 				sock.close()
 			self._error = 'connection to %s:%s failed (%s)' % ( self._host, self._port, msg )

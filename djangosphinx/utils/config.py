@@ -15,7 +15,7 @@ def _get_database_engine():
         return settings.DATABASE_ENGINE
     elif settings.DATABASE_ENGINE.startswith('postgresql'):
         return 'pgsql'
-    raise ValueError, "Only MySQL and PostgreSQL engines are supported by Sphinx."
+    raise ValueError("Only MySQL and PostgreSQL engines are supported by Sphinx.")
 
 def _get_template(name):
     paths = (
@@ -32,7 +32,7 @@ def _get_template(name):
             return t
         finally:
             fp.close()
-    raise ValueError, "Template matching name does not exist: %s." % (name,)
+    raise ValueError("Template matching name does not exist: %s." % (name,))
 
 def _is_sourcable_field(field):
     # We can use float fields in 0.98

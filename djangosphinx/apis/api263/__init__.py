@@ -116,7 +116,7 @@ class SphinxClient:
 		try:
 			sock = socket.socket ( socket.AF_INET, socket.SOCK_STREAM )
 			sock.connect ( ( self._host, self._port ) )
-		except socket.error, msg:
+		except socket.error as msg:
 			if sock:
 				sock.close()
 			self._error = 'connection to %s:%s failed (%s)' % ( self._host, self._port, msg )

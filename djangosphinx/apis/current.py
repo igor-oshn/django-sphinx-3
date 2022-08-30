@@ -2,7 +2,7 @@ from djangosphinx.constants import *
 
 try:
     from sphinxapi import *
-except ImportError, exc:
+except ImportError as exc:
     name = 'djangosphinx.apis.api%d' % (SPHINX_API_VERSION,)
     sphinxapi = __import__(name)
     for name in name.split('.')[1:]:

@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 import djangosphinx
 
 setup(
-    name='django-sphinx',
+    name='djangosphinx',
     version=".".join(map(str, djangosphinx.__version__)),
     author='David Cramer',
     author_email='dcramer@gmail.com',

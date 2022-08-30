@@ -75,7 +75,7 @@ SPH_ATTR_ORDINAL		= 3
 SPH_ATTR_BOOL			= 4
 SPH_ATTR_FLOAT			= 5
 SPH_ATTR_BIGINT			= 6
-SPH_ATTR_MULTI			= 0X40000000L
+SPH_ATTR_MULTI			= 0X40000000
 
 SPH_ATTR_TYPES = (SPH_ATTR_NONE,
 				  SPH_ATTR_INTEGER,
@@ -196,7 +196,7 @@ class SphinxClient:
 				desc = '%s;%s' % addr
 			sock = socket.socket ( af, socket.SOCK_STREAM )
 			sock.connect ( addr )
-		except socket.error, msg:
+		except socket.error as msg:
 			if sock:
 				sock.close()
 			self._error = 'connection to %s failed (%s)' % ( desc, msg )
