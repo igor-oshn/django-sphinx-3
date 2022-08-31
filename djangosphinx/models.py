@@ -86,9 +86,9 @@ class SphinxProxy(object):
         except RuntimeError:
             return False
 
-    def __unicode__(self):
+    def __str__(self):
         try:
-            return unicode(self._current_object)
+            return str(self._current_object)
         except RuntimeError:
             return repr(self)
 
@@ -137,7 +137,6 @@ class SphinxProxy(object):
 
     __delattr__ = lambda x, n: delattr(x._current_object, n)
     __str__ = lambda x: str(x._current_object)
-    __unicode__ = lambda x: unicode(x._current_object)
     __lt__ = lambda x, o: x._current_object < o
     __le__ = lambda x, o: x._current_object <= o
     __eq__ = lambda x, o: x._current_object == o
@@ -290,7 +289,7 @@ class SphinxQuerySet(object):
         return self._clone(**kwargs)
 
     def query(self, string):
-        return self._clone(_query=unicode(string).encode('utf-8'))
+        return self._clone(_query=str(string).encode('utf-8'))
 
     def group_by(self, attribute, func, groupsort='@group desc'):
         return self._clone(_groupby=attribute, _groupfunc=func, _groupsort=groupsort)
@@ -523,7 +522,7 @@ class SphinxQuerySet(object):
         client.SetLimits(int(self._offset), int(self._limit), int(self._maxmatches))
         
         # To avoid modifying the Sphinx API, we solve unicode indexes here
-        if isinstance(self._index, unicode):
+        if isinstance(self._index, str):
             self._index = self._index.encode('utf-8')
         
         results = client.Query(self._query, self._index)
@@ -584,7 +583,7 @@ class SphinxQuerySet(object):
                     
                     # XXX: Sometimes attrs is empty and we cannot have custom primary key attributes
                     for r in results['matches']:
-                        r['id'] = ', '.join([unicode(r['attrs'][p.column]) for p in pks])
+                        r['id'] = ', '.join([str(r['attrs'][p.column]) for p in pks])
             
                     # Join our Q objects to get a where clause which
                     # matches all primary keys, even across multiple columns
@@ -592,9 +591,9 @@ class SphinxQuerySet(object):
                     queryset = queryset.filter(q)
                 else:
                     for r in results['matches']:
-                        r['id'] = unicode(r['id'])
+                        r['id'] = str(r['id'])
                     queryset = queryset.filter(pk__in=[r['id'] for r in results['matches']])
-                queryset = dict([(', '.join([unicode(getattr(o, p.attname)) for p in pks]), o) for o in queryset])
+                queryset = dict([(', '.join([str(getattr(o, p.attname)) for p in pks]), o) for o in queryset])
 
                 if self._passages:
                     # TODO: clean this up
@@ -613,7 +612,7 @@ class SphinxQuerySet(object):
                 objcache = {}
                 for r in results['matches']:
                     ct = r['attrs']['content_type']
-                    r['id'] = unicode(r['id'])
+                    r['id'] = str(r['id'])
                     objcache.setdefault(ct, {})[r['id']] = None
                 for ct in objcache:
                     model_class = ContentType.objects.get(pk=ct).model_class()
@@ -622,7 +621,7 @@ class SphinxQuerySet(object):
                     if results['matches'][0]['attrs'].get(pks[0].column):
                         for r in results['matches']:
                             if r['attrs']['content_type'] == ct:
-                                val = ', '.join([unicode(r['attrs'][p.column]) for p in pks])
+                                val = ', '.join([str(r['attrs'][p.column]) for p in pks])
                                 objcache[ct][r['id']] = r['id'] = val
                     
                         q = reduce(operator.or_, [reduce(operator.and_, [Q(**{p.name: r['attrs'][p.column]}) for p in pks]) for r in results['matches'] if r['attrs']['content_type'] == ct])
@@ -631,7 +630,7 @@ class SphinxQuerySet(object):
                         queryset = self.get_query_set(model_class).filter(pk__in=[r['id'] for r in results['matches'] if r['attrs']['content_type'] == ct])
 
                     for o in queryset:
-                        objcache[ct][', '.join([unicode(getattr(o, p.name)) for p in pks])] = o
+                        objcache[ct][', '.join([str(getattr(o, p.name)) for p in pks])] = o
                 
                 if self._passages:
                     for r in results['matches']:
@@ -652,7 +651,7 @@ class SphinxQuerySet(object):
             opts = self._passages_opts
         else:
             opts = {}
-        if isinstance(self._index, unicode):
+        if isinstance(self._index, str):
             self._index = self._index.encode('utf-8')
         passages_list = client.BuildExcerpts(docs, self._index, words, opts)
         

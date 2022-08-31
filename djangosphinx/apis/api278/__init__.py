@@ -493,7 +493,7 @@ class SphinxClient:
 		req.append(pack('>L', len(self._sortby)))
 		req.append(self._sortby)
 
-		if isinstance(query,unicode):
+		if isinstance(query,str):
 			query = query.encode('utf-8')
 		assert(isinstance(query,str))
 
@@ -730,7 +730,7 @@ class SphinxClient:
 		"""
 		if not opts:
 			opts = {}
-		if isinstance(words,unicode):
+		if isinstance(words,str):
 			words = words.encode('utf-8')
 
 		assert(isinstance(docs, list))
@@ -786,7 +786,7 @@ class SphinxClient:
 		# documents
 		req.append(pack('>L', len(docs)))
 		for doc in docs:
-			if isinstance(doc,unicode):
+			if isinstance(doc,str):
 				doc = doc.encode('utf-8')
 			assert(isinstance(doc, str))
 			req.append(pack('>L', len(doc)))
