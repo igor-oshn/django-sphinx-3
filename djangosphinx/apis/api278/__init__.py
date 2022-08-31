@@ -566,7 +566,7 @@ class SphinxClient:
 		for v in self._overrides.values():
 			req.extend ( ( pack('>L', len(v['name'])), v['name'] ) )
 			req.append ( pack('>LL', v['type'], len(v['values'])) )
-			for id, value in v['values'].iteritems():
+			for id, value in v['values'].items():
 				req.append ( pack('>Q', id) )
 				if v['type'] == SPH_ATTR_FLOAT:
 					req.append ( pack('>f', value) )

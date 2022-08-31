@@ -222,7 +222,7 @@ class SphinxQuerySet(object):
         self.using                  = using
         
         options = self._format_options(**kwargs)
-        for key, value in options.iteritems():
+        for key, value in options.items():
             setattr(self, key, value)
 
         if model:
@@ -276,7 +276,7 @@ class SphinxQuerySet(object):
         kwargs['rankmode'] = getattr(sphinxapi, kwargs.get('rankmode', 'SPH_RANK_NONE'), None)
         kwargs['mode'] = getattr(sphinxapi, kwargs.get('mode', 'SPH_MATCH_ALL'), sphinxapi.SPH_MATCH_ALL)
 
-        kwargs = dict([('_%s' % (key,), value) for key, value in kwargs.iteritems() if key in self.available_kwargs])
+        kwargs = dict([('_%s' % (key,), value) for key, value in kwargs.items() if key in self.available_kwargs])
         return kwargs
 
     def get_query_set(self, model):
@@ -314,7 +314,7 @@ class SphinxQuerySet(object):
     # only works on attributes
     def filter(self, **kwargs):
         filters = self._filters.copy()
-        for k,v in kwargs.iteritems():
+        for k,v in kwargs.items():
             if hasattr(v, '__iter__'):
                 v = list(v)
             elif not (isinstance(v, list) or isinstance(v, tuple)):
@@ -339,7 +339,7 @@ class SphinxQuerySet(object):
     # only works on attributes
     def exclude(self, **kwargs):
         filters = self._excludes.copy()
-        for k,v in kwargs.iteritems():
+        for k,v in kwargs.items():
             if hasattr(v, 'next'):
                 v = list(v)
             elif not (isinstance(v, list) or isinstance(v, tuple)):
@@ -404,7 +404,7 @@ class SphinxQuerySet(object):
         # Clones the queryset passing any changed args
         c = self.__class__()
         c.__dict__.update(self.__dict__.copy())
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(c, k, v)
         return c
     
@@ -444,7 +444,7 @@ class SphinxQuerySet(object):
         client.SetMatchMode(self._mode)
         
         def _handle_filters(filter_list, exclude=False):
-            for name, values in filter_list.iteritems():
+            for name, values in filter_list.items():
                 parts = len(name.split('__'))
                 if parts > 2:
                     raise NotImplementedError('Related object and/or multiple field lookups not supported')
