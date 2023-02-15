@@ -242,7 +242,7 @@ class SphinxQuerySet(object):
         return iter(self._get_data())
     
     def __getitem__(self, k):
-        if not isinstance(k, (slice, int, long)):
+        if not isinstance(k, (slice, int)):
             raise TypeError
         assert (not isinstance(k, slice) and (k >= 0)) \
             or (isinstance(k, slice) and (k.start is None or k.start >= 0) and (k.stop is None or k.stop >= 0)), \
@@ -789,7 +789,7 @@ class SphinxRelation(SphinxSearch):
             ids = []
             for r in results['matches']:
                 value = r['attrs']['@groupby']
-                if isinstance(value, (int, long)):
+                if isinstance(value, int):
                     ids.append(value)
                 else:
                     ids.extend()
