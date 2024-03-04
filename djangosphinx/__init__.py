@@ -63,7 +63,11 @@ def lazy_object(location):
     def inner(*args, **kwargs):
         parts = location.rsplit('.', 1)
         warnings.warn('`djangosphinx.%s` is deprecated. Please use `%s` instead.' % (parts[1], location), DeprecationWarning)
-        imp = __import__(parts[0], globals(), locals(), [parts[1]], -1)
+        try:
+            imp = __import__(parts[0], globals(), locals(), [parts[1]], -1)
+        except ValueError:
+            # Python 3
+            imp = __import__(parts[0], globals(), locals(), [parts[1]], 0)
         func = getattr(imp, parts[1])
         if callable(func):
             return func(*args, **kwargs)
