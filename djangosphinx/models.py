@@ -427,6 +427,9 @@ class SphinxQuerySet(object):
         client = self._get_sphinx_client()
 
         params = []
+        
+        if isinstance(self._select, str):
+            client.SetSelect(self._select)
 
         if self._sort:
             params.append('sort=%s' % (self._sort,))
