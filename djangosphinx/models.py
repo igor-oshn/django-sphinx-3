@@ -428,7 +428,7 @@ class SphinxQuerySet(object):
 
         params = []
         
-        if isinstance(self._select, str):
+        if self._select and isinstance(self._select, str):
             client.SetSelect(self._select)
 
         if self._sort:
